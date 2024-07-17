@@ -3,5 +3,5 @@
 init and change repository
 
 ```
-go install -u github.com/hiromaily/p-init
+go install github.com/phaier/p-init@latest
 ```
