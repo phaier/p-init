@@ -1,4 +1,4 @@
-package init
+package copy
 
 import (
 	"embed"
@@ -52,6 +52,7 @@ func copyWithFS(files embed.FS) error {
 //go:embed npm/*
 var npmFS embed.FS
 
+// Copy は指定されたテンプレートをコピーします
 func Copy(template string) error {
 	switch template {
 	case "npm":
