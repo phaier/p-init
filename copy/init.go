@@ -2,12 +2,44 @@ package copy
 
 import (
 	"embed"
+	"io"
 	"io/fs"
 	"os"
 	"path/filepath"
 )
 
-func copyWithFS(files embed.FS) error {
+func copyFile(cd string, files fs.FS, path string) error {
+	file, err := files.Open(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	data, err := io.ReadAll(file)
+	if err != nil {
+		return err
+	}
+
+	relativePath, err := filepath.Rel(".", path)
+	if err != nil {
+		return err
+	}
+
+	destPath := filepath.Join(cd, relativePath)
+
+	destDir := filepath.Dir(destPath)
+	if err := os.MkdirAll(destDir, os.ModePerm); err != nil {
+		return err
+	}
+
+	if err := os.WriteFile(destPath, data, os.ModePerm); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func copyWithFS(files fs.FS) error {
 	cd, err := os.Getwd()
 	if err != nil {
 		return err
@@ -19,24 +51,8 @@ func copyWithFS(files embed.FS) error {
 		}
 
 		if !d.IsDir() {
-			data, err := files.ReadFile(path)
+			err := copyFile(cd, files, path)
 			if err != nil {
-				return err
-			}
-
-			relativePath, err := filepath.Rel(".", path)
-			if err != nil {
-				return err
-			}
-
-			destPath := filepath.Join(cd, relativePath)
-
-			destDir := filepath.Dir(destPath)
-			if err := os.MkdirAll(destDir, os.ModePerm); err != nil {
-				return err
-			}
-
-			if err := os.WriteFile(destPath, data, os.ModePerm); err != nil {
 				return err
 			}
 
@@ -56,7 +72,12 @@ var npmFS embed.FS
 func Copy(template string) error {
 	switch template {
 	case "npm":
-		return copyWithFS(npmFS)
+		files, err := fs.Sub(npmFS, "npm")
+		if err != nil {
+			return err
+		}
+
+		return copyWithFS(files)
 	}
 
 	return nil
