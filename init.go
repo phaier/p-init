@@ -7,7 +7,7 @@ import (
 
 func main() {
 	rootCmd := &cobra.Command{
-		Version: "0.0.1",
+		Version: "0.0.2",
 		Use:     "p-init [command] [options]",
 	}
 
