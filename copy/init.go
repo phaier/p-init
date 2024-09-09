@@ -68,11 +68,21 @@ func copyWithFS(files fs.FS) error {
 //go:embed npm/*
 var npmFS embed.FS
 
+//go:embed github-pages/*
+var githubPagesFS embed.FS
+
 // Copy は指定されたテンプレートをコピーします
 func Copy(template string) error {
 	switch template {
 	case "npm":
 		files, err := fs.Sub(npmFS, "npm")
+		if err != nil {
+			return err
+		}
+
+		return copyWithFS(files)
+	case "github-pages":
+		files, err := fs.Sub(githubPagesFS, "github-pages")
 		if err != nil {
 			return err
 		}

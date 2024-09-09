@@ -1,0 +1,11 @@
+# docs/
+
+yarn-error.log
+
+node_modules/
+
+
+dist/repo/js/**/*.js
+dist/repo/js/**/*.js.map
+dist/repo/js/**/*.css
+dist/repo/js/**/*.css.map

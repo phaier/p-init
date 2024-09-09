@@ -1,0 +1,48 @@
+{
+  "private": true,
+  "name": "@phaier/repo",
+  "version": "0.0.1",
+  "description": "@phaier/repo",
+  "scripts": {
+    "test": "jest",
+    "release": "jake clean && webpack --mode production",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "prettier": "prettier --write \"(ts|scss)/**/*.(ts|tsx|scss)\"",
+    "build": "jake clean && webpack --mode development",
+    "clean": "jake clean",
+    "watch": "webpack --progress --watch --mode development",
+    "server": "http-server ./dist -p 8080 -o /repo/"
+  },
+  "author": "inabe49",
+  "license": "MIT",
+  "devDependencies": {
+    "@phaier/eslint-config-typescript": "^0.0.4",
+    "@types/jest": "^29.5.12",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "css-loader": "^7.1.2",
+    "del": "^7.1.0",
+    "http-server": "^14.1.1",
+    "jake": "^10.9.2",
+    "jest": "^29.7.0",
+    "mini-css-extract-plugin": "^2.9.1",
+    "node-sass": "^9.0.0",
+    "prettier": "^3.3.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sass-loader": "^16.0.1",
+    "style-loader": "^4.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "tsconfig-paths-webpack-plugin": "^4.1.0",
+    "typescript": "^5.5.4",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "volta": {
+    "node": "18.20.2"
+  },
+  "dependencies": {}
+}
